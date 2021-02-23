@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Ventanas;
 
 import java.io.BufferedReader;
@@ -15,46 +10,37 @@ import java.util.ArrayList;
 import java.util.Collections;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import java.util.List;
 
-/**
- *
- * @author Los Asket
- */
 public class Convertidor extends javax.swing.JFrame {
 
-JFileChooser seleccionar = new JFileChooser();
+    JFileChooser seleccionar = new JFileChooser();
     File archivo;
     FileInputStream entrada;
     FileOutputStream salida;
     FileReader leer;
-            File read;
+    File read;
 
-     
     public Convertidor() {
         initComponents();
         this.setLocationRelativeTo(null);
     }
 
-    public String AbrirArchivo(){
-       String documento="";
-       String aux;
-        File write;
+    public String AbrirArchivo() {
         JFileChooser jf = new JFileChooser();
         String texto = "";
-         String convertido="";
+        String convertido = "";
         try {
             jf.setFileSelectionMode(JFileChooser.FILES_ONLY);
             jf.showOpenDialog(null);
             read = jf.getSelectedFile();
             FileReader archiv = new FileReader(read);
             BufferedReader buffer = new BufferedReader(archiv);
-            
+
             String temp = " ";
             String bfRead;
-            
+
             while ((bfRead = buffer.readLine()) != null) {
-                temp = temp + bfRead + " "; //Guardar texto del archivo
+                temp = temp + bfRead + " ";
             }
 
             texto = temp;
@@ -62,7 +48,7 @@ JFileChooser seleccionar = new JFileChooser();
         } catch (IOException e) {
             System.err.println("No se encontro archivo");
         }
-        
+
         ArrayList<Integer> num = new ArrayList();
 
         for (int i = 0; i < texto.length(); i++) {
@@ -79,56 +65,25 @@ JFileChooser seleccionar = new JFileChooser();
         for (int i = 0; i < num.size(); i++) {
             convertido = convertido + " " + String.valueOf(num.get(i));
         }
-                             txtarea.setText(convertido);
+        txtarea.setText(convertido);
 
         return convertido;
 
     }
-   
-   
-   public String GuardarArchivo(File archivo,String documento){
-       String mensaje=null;
-       try {
-           salida=new FileOutputStream(archivo);
-           byte[] bytxt=documento.getBytes();
-           salida.write(bytxt);
-           mensaje="Archivo Guardado";
-          
-          
-       } catch (Exception e) {
-       }
-       return mensaje;
-       
-   }
-   
-//   public String LeerArchivo(File archivo){
-////       String documento="";
-////       try {
-////           String documento2="";
-////           FileReader leer=new FileReader(archivo);
-////           BufferedReader bf = new BufferedReader(leer);
-////           String aux = "";
-////           String temp ="";
-////           while ((aux = bf.readLine()) != null) 
-////           {               
-////            temp = temp + bf + " "; //Guardar texto del archivo            
-////           }          
-////           documento=temp;
-////       } catch (Exception e) {
-////       }
-////        ArrayList<Integer> num = new ArrayList();
-////            for (int i = 0; i <documento.length(); i++) {
-////            String[] parts = documento.split(" ");
-////                num.add(Integer.parseInt(parts[i]));
-////        }
-////        Collections.sort(num);
-////           for (int i = 0; i < num.size(); i++) {
-////                       documento=String.valueOf(num.get(i));
-////           }
-////           System.out.println("documento");
-////       return documento;
-//   }
-//    
+
+    public String GuardarArchivo(File archivo, String documento) {
+        String mensaje = null;
+        try {
+            salida = new FileOutputStream(archivo);
+            byte[] bytxt = documento.getBytes();
+            salida.write(bytxt);
+            mensaje = "Archivo Guardado";
+
+        } catch (Exception e) {
+        }
+        return mensaje;
+
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -192,63 +147,43 @@ JFileChooser seleccionar = new JFileChooser();
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtareaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtareaActionPerformed
-//        String Documento=AbrirArchivo();
-//        
-//        txtarea.setText(Documento);
-        
+
     }//GEN-LAST:event_txtareaActionPerformed
 
     private void BotonAbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonAbrirActionPerformed
-//
-//            if(seleccionar.showDialog(null, "Abrir")==JFileChooser.FILES_ONLY){
-//        archivo=seleccionar.getSelectedFile();
-//        if(archivo.canRead()){
-//            if(archivo.getName().endsWith("txt")||archivo.getName().endsWith("csv")){
-                AbrirArchivo();
-//               
-//
-//                
-//           }else{
-//                JOptionPane.showMessageDialog(null,"Archivo no compatible");
-//            }
-//        }
-//    }
-
+       AbrirArchivo();
     }//GEN-LAST:event_BotonAbrirActionPerformed
 
     private void BotonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonGuardarActionPerformed
-        if(seleccionar.showDialog(null, "Guardar")==JFileChooser.APPROVE_OPTION){
-        archivo=seleccionar.getSelectedFile();
-        if(archivo.getName().endsWith("txt")||archivo.getName().endsWith("csv")){
-            String Documento=txtarea.getText();
-            String mensaje=GuardarArchivo(archivo, Documento);
-            if(mensaje!=null){
-                JOptionPane.showMessageDialog(null, mensaje);
-            }else{
-                JOptionPane.showMessageDialog(null, "archivo no reconocido");
-            }
-            
-        }else{
-           JOptionPane.showMessageDialog(null, "porfavor guardar el archivo");
+        if (seleccionar.showDialog(null, "Guardar") == JFileChooser.APPROVE_OPTION) {
+            archivo = seleccionar.getSelectedFile();
+            if (archivo.getName().endsWith("txt") || archivo.getName().endsWith("csv")) {
+                String Documento = txtarea.getText();
+                String mensaje = GuardarArchivo(archivo, Documento);
+                if (mensaje != null) {
+                    JOptionPane.showMessageDialog(null, mensaje);
+                } else {
+                    JOptionPane.showMessageDialog(null, "archivo no reconocido");
+                }
 
+            } else {
+                JOptionPane.showMessageDialog(null, "porfavor guardar el archivo");
+
+            }
         }
-    }
     }//GEN-LAST:event_BotonGuardarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-     Principal b = new Principal();
-     b.setVisible(true);
-     this.setVisible(false);    
+        Principal b = new Principal();
+        b.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-     System.exit(0);
+        System.exit(0);
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
