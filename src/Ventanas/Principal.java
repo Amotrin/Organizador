@@ -36,14 +36,13 @@ public class Principal extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(716, 761));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/950584.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 0, 510, 520));
 
         jLabel2.setFont(new java.awt.Font("Arial Black", 1, 36)); // NOI18N
-        jLabel2.setText("¿Listo para oganizar tus datos?");
+        jLabel2.setText("¿Listo para organizar tus datos?");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 560, -1, -1));
 
         jButton1.setBackground(new java.awt.Color(0, 255, 255));
