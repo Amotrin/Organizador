@@ -49,12 +49,14 @@ public class Convertidor extends javax.swing.JFrame {
             System.err.println("No se encontro archivo");
         }
 
-        ArrayList<Integer> num = new ArrayList();
+        ArrayList num = new ArrayList();
 
         for (int i = 0; i < texto.length(); i++) {
+            texto=texto.replaceAll(",", " ");
             String[] parts = texto.split(" ");
             try {
-                num.add(Integer.parseInt(parts[i]));
+                num.add(Double.parseDouble(parts[i]));
+                
             } catch (Exception e) {
 
             }
@@ -66,7 +68,7 @@ public class Convertidor extends javax.swing.JFrame {
             convertido = convertido + " " + String.valueOf(num.get(i));
         }
         txtarea.setText(convertido);
-
+        System.out.println(num);
         return convertido;
 
     }
@@ -81,6 +83,7 @@ public class Convertidor extends javax.swing.JFrame {
 
         } catch (Exception e) {
         }
+        
         return mensaje;
 
     }
