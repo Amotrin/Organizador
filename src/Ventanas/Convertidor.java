@@ -5,6 +5,8 @@
  */
 package Ventanas;
 
+import Negocio.NArchivo;
+import Util.Util;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -23,36 +25,37 @@ import java.util.List;
  */
 public class Convertidor extends javax.swing.JFrame {
 
-JFileChooser seleccionar = new JFileChooser();
+    JFileChooser seleccionar = new JFileChooser();
     File archivo;
     FileInputStream entrada;
     FileOutputStream salida;
     FileReader leer;
-            File read;
+    File read;
+    NArchivo objeto;
+    Util util = new Util();
 
-     
     public Convertidor() {
         initComponents();
         this.setLocationRelativeTo(null);
     }
 
-    public String AbrirArchivo(){
-       String documento="";
-       String aux;
+    public String AbrirArchivo() {
+        String documento = "";
+        String aux;
         File write;
         JFileChooser jf = new JFileChooser();
         String texto = "";
-         String convertido="";
+        String convertido = "";
         try {
             jf.setFileSelectionMode(JFileChooser.FILES_ONLY);
             jf.showOpenDialog(null);
             read = jf.getSelectedFile();
             FileReader archiv = new FileReader(read);
             BufferedReader buffer = new BufferedReader(archiv);
-            
+
             String temp = " ";
             String bfRead;
-            
+
             while ((bfRead = buffer.readLine()) != null) {
                 temp = temp + bfRead + " "; //Guardar texto del archivo
             }
@@ -62,13 +65,15 @@ JFileChooser seleccionar = new JFileChooser();
         } catch (IOException e) {
             System.err.println("No se encontro archivo");
         }
-        
-        ArrayList<Integer> num = new ArrayList();
+
+        ArrayList num = new ArrayList();
 
         for (int i = 0; i < texto.length(); i++) {
+            texto = texto.replaceAll(",", " ");
             String[] parts = texto.split(" ");
+
             try {
-                num.add(Integer.parseInt(parts[i]));
+                num.add(Double.parseDouble(parts[i]));
             } catch (Exception e) {
 
             }
@@ -79,28 +84,26 @@ JFileChooser seleccionar = new JFileChooser();
         for (int i = 0; i < num.size(); i++) {
             convertido = convertido + " " + String.valueOf(num.get(i));
         }
-                             txtarea.setText(convertido);
+        txtarea.setText(convertido);
 
         return convertido;
 
     }
-   
-   
-   public String GuardarArchivo(File archivo,String documento){
-       String mensaje=null;
-       try {
-           salida=new FileOutputStream(archivo);
-           byte[] bytxt=documento.getBytes();
-           salida.write(bytxt);
-           mensaje="Archivo Guardado";
-          
-          
-       } catch (Exception e) {
-       }
-       return mensaje;
-       
-   }
-   
+
+    public String GuardarArchivo(File archivo, String documento) {
+        String mensaje = null;
+        try {
+            salida = new FileOutputStream(archivo);
+            byte[] bytxt = documento.getBytes();
+            salida.write(bytxt);
+            mensaje = "Archivo Guardado";
+
+        } catch (Exception e) {
+        }
+        return mensaje;
+
+    }
+
 //   public String LeerArchivo(File archivo){
 ////       String documento="";
 ////       try {
@@ -195,7 +198,7 @@ JFileChooser seleccionar = new JFileChooser();
 //        String Documento=AbrirArchivo();
 //        
 //        txtarea.setText(Documento);
-        
+
     }//GEN-LAST:event_txtareaActionPerformed
 
     private void BotonAbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonAbrirActionPerformed
@@ -204,7 +207,7 @@ JFileChooser seleccionar = new JFileChooser();
 //        archivo=seleccionar.getSelectedFile();
 //        if(archivo.canRead()){
 //            if(archivo.getName().endsWith("txt")||archivo.getName().endsWith("csv")){
-                AbrirArchivo();
+        AbrirArchivo();
 //               
 //
 //                
@@ -217,32 +220,32 @@ JFileChooser seleccionar = new JFileChooser();
     }//GEN-LAST:event_BotonAbrirActionPerformed
 
     private void BotonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonGuardarActionPerformed
-        if(seleccionar.showDialog(null, "Guardar")==JFileChooser.APPROVE_OPTION){
-        archivo=seleccionar.getSelectedFile();
-        if(archivo.getName().endsWith("txt")||archivo.getName().endsWith("csv")){
-            String Documento=txtarea.getText();
-            String mensaje=GuardarArchivo(archivo, Documento);
-            if(mensaje!=null){
-                JOptionPane.showMessageDialog(null, mensaje);
-            }else{
-                JOptionPane.showMessageDialog(null, "archivo no reconocido");
-            }
-            
-        }else{
-           JOptionPane.showMessageDialog(null, "porfavor guardar el archivo");
+        if (seleccionar.showDialog(null, "Guardar") == JFileChooser.APPROVE_OPTION) {
+            archivo = seleccionar.getSelectedFile();
+            if (archivo.getName().endsWith("txt") || archivo.getName().endsWith("csv")) {
+                String Documento = txtarea.getText();
+                String mensaje = GuardarArchivo(archivo, Documento);
+                if (mensaje != null) {
+                    JOptionPane.showMessageDialog(null, mensaje);
+                } else {
+                    JOptionPane.showMessageDialog(null, "archivo no reconocido");
+                }
 
+            } else {
+                JOptionPane.showMessageDialog(null, "porfavor guardar el archivo");
+
+            }
         }
-    }
     }//GEN-LAST:event_BotonGuardarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-     Principal b = new Principal();
-     b.setVisible(true);
-     this.setVisible(false);    
+        Principal b = new Principal();
+        b.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-     System.exit(0);
+        System.exit(0);
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
