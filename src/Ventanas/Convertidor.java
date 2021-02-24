@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Ventanas;
 
 import Negocio.NArchivo;
@@ -19,10 +15,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import java.util.List;
 
-/**
- *
- * @author Los Asket
- */
+
 public class Convertidor extends javax.swing.JFrame {
 
     JFileChooser seleccionar = new JFileChooser();
@@ -103,35 +96,7 @@ public class Convertidor extends javax.swing.JFrame {
         return mensaje;
 
     }
-
-//   public String LeerArchivo(File archivo){
-////       String documento="";
-////       try {
-////           String documento2="";
-////           FileReader leer=new FileReader(archivo);
-////           BufferedReader bf = new BufferedReader(leer);
-////           String aux = "";
-////           String temp ="";
-////           while ((aux = bf.readLine()) != null) 
-////           {               
-////            temp = temp + bf + " "; //Guardar texto del archivo            
-////           }          
-////           documento=temp;
-////       } catch (Exception e) {
-////       }
-////        ArrayList<Integer> num = new ArrayList();
-////            for (int i = 0; i <documento.length(); i++) {
-////            String[] parts = documento.split(" ");
-////                num.add(Integer.parseInt(parts[i]));
-////        }
-////        Collections.sort(num);
-////           for (int i = 0; i < num.size(); i++) {
-////                       documento=String.valueOf(num.get(i));
-////           }
-////           System.out.println("documento");
-////       return documento;
-//   }
-//    
+  
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -195,27 +160,12 @@ public class Convertidor extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtareaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtareaActionPerformed
-//        String Documento=AbrirArchivo();
-//        
-//        txtarea.setText(Documento);
 
     }//GEN-LAST:event_txtareaActionPerformed
 
     private void BotonAbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonAbrirActionPerformed
-//
-//            if(seleccionar.showDialog(null, "Abrir")==JFileChooser.FILES_ONLY){
-//        archivo=seleccionar.getSelectedFile();
-//        if(archivo.canRead()){
-//            if(archivo.getName().endsWith("txt")||archivo.getName().endsWith("csv")){
+
         AbrirArchivo();
-//               
-//
-//                
-//           }else{
-//                JOptionPane.showMessageDialog(null,"Archivo no compatible");
-//            }
-//        }
-//    }
 
     }//GEN-LAST:event_BotonAbrirActionPerformed
 
@@ -249,9 +199,7 @@ public class Convertidor extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

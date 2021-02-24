@@ -1,12 +1,5 @@
 package Util;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -22,10 +15,7 @@ import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author Usuario
- */
+
 public class Util {
     public Object[][] setJTable(ArrayList<Object> lista) {
         Object[][] objetos = new Object[lista.size()][1];
