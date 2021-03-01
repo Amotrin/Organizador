@@ -4,10 +4,12 @@ package Ventanas;
 import Negocio.NArchivo;
 import Util.Util;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,15 +26,18 @@ public class Convertidor extends javax.swing.JFrame {
     FileOutputStream salida;
     FileReader leer;
     File read;
+    File read_w;
+    FileWriter write;
     NArchivo objeto;
     Util util = new Util();
+    ArrayList pta = new ArrayList();
 
     public Convertidor() {
         initComponents();
         this.setLocationRelativeTo(null);
     }
 
-    public String AbrirArchivo() {
+    public ArrayList AbrirArchivo() {
         String documento = "";
         String aux;
         File write;
@@ -46,49 +51,57 @@ public class Convertidor extends javax.swing.JFrame {
             FileReader archiv = new FileReader(read);
             BufferedReader buffer = new BufferedReader(archiv);
 
-            String temp = " ";
+            Long temp;
             String bfRead;
-
+            temp= System.currentTimeMillis();
             while ((bfRead = buffer.readLine()) != null) {
-                temp = temp + bfRead + " "; //Guardar texto del archivo
+                 pta.add(Long.parseLong(bfRead));
             }
-
-            texto = temp;
-
+            Long tempf= System.currentTimeMillis();
+            System.out.println("lectura completada:" + (tempf - temp));
+            System.out.println(pta.size());
         } catch (IOException e) {
             System.err.println("No se encontro archivo");
         }
 
-        ArrayList num = new ArrayList();
+//        ArrayList num = new ArrayList();
 
-        for (int i = 0; i < texto.length(); i++) {
-            texto = texto.replaceAll(",", " ");
-            String[] parts = texto.split(" ");
+//        for (int i = 0; i < texto.length(); i++) {
+//            texto = texto.replaceAll(",", " ");
+//            String[] parts = texto.split(" ");
+//
+//            try {
+//                num.add(Double.parseDouble(parts[i]));
+//            } catch (Exception e) {
+//
+//            }
+//        }
 
-            try {
-                num.add(Double.parseDouble(parts[i]));
-            } catch (Exception e) {
-
-            }
+        Collections.sort(pta);
+        String convertidor="";
+        for (int i = 0; i < 500; i++) {
+            convertidor=convertidor + String.valueOf(pta.get(i))+" ";
         }
+        
+        txtarea.setText(convertidor);
 
-        Collections.sort(num);
-
-        for (int i = 0; i < num.size(); i++) {
-            convertido = convertido + " " + String.valueOf(num.get(i));
-        }
-        txtarea.setText(convertido);
-
-        return convertido;
+        return pta;
 
     }
 
-    public String GuardarArchivo(File archivo, String documento) {
+    public String GuardarArchivo() {
         String mensaje = null;
+                          JFileChooser escritura = new JFileChooser();
         try {
-            salida = new FileOutputStream(archivo);
-            byte[] bytxt = documento.getBytes();
-            salida.write(bytxt);
+                  escritura.setFileSelectionMode(JFileChooser.FILES_ONLY);
+                  escritura.showOpenDialog(null);
+                  read_w=escritura.getSelectedFile();
+                  FileWriter wt = new FileWriter(read_w);
+                  BufferedWriter bf_w= new BufferedWriter(wt);
+            for (int i = 0; i < pta.size(); i++) {
+                  bf_w.write(String.valueOf(pta.get(i)) + "\n");
+            }
+            bf_w.close();
             mensaje = "Archivo Guardado";
 
         } catch (Exception e) {
@@ -103,10 +116,11 @@ public class Convertidor extends javax.swing.JFrame {
 
         BotonAbrir = new javax.swing.JButton();
         BotonGuardar = new javax.swing.JButton();
-        txtarea = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        fondo = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtarea = new javax.swing.JTextArea();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -128,13 +142,6 @@ public class Convertidor extends javax.swing.JFrame {
         });
         getContentPane().add(BotonGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 50, 220, 40));
 
-        txtarea.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtareaActionPerformed(evt);
-            }
-        });
-        getContentPane().add(txtarea, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 130, 460, 250));
-
         jButton1.setBackground(new java.awt.Color(0, 204, 204));
         jButton1.setText("Volver");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -153,15 +160,18 @@ public class Convertidor extends javax.swing.JFrame {
         });
         getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 400, 90, 40));
 
-        fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/200-2007939_perfect-white-gradient-4k-wallpaper.jpg"))); // NOI18N
-        getContentPane().add(fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 603, 500));
+        txtarea.setLineWrap(true);
+        txtarea.setColumns(20);
+        txtarea.setRows(5);
+        jScrollPane1.setViewportView(txtarea);
+
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 130, 460, 240));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/200-2007939_perfect-white-gradient-4k-wallpaper.jpg"))); // NOI18N
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 600, 500));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void txtareaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtareaActionPerformed
-
-    }//GEN-LAST:event_txtareaActionPerformed
 
     private void BotonAbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonAbrirActionPerformed
 
@@ -170,22 +180,8 @@ public class Convertidor extends javax.swing.JFrame {
     }//GEN-LAST:event_BotonAbrirActionPerformed
 
     private void BotonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonGuardarActionPerformed
-        if (seleccionar.showDialog(null, "Guardar") == JFileChooser.APPROVE_OPTION) {
-            archivo = seleccionar.getSelectedFile();
-            if (archivo.getName().endsWith("txt") || archivo.getName().endsWith("csv")) {
-                String Documento = txtarea.getText();
-                String mensaje = GuardarArchivo(archivo, Documento);
-                if (mensaje != null) {
-                    JOptionPane.showMessageDialog(null, mensaje);
-                } else {
-                    JOptionPane.showMessageDialog(null, "archivo no reconocido");
-                }
-
-            } else {
-                JOptionPane.showMessageDialog(null, "porfavor guardar el archivo");
-
-            }
-        }
+        GuardarArchivo();
+        JOptionPane.showMessageDialog(null, "Archivo guardado");
     }//GEN-LAST:event_BotonGuardarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -235,9 +231,10 @@ public class Convertidor extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BotonAbrir;
     private javax.swing.JButton BotonGuardar;
-    private javax.swing.JLabel fondo;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JTextField txtarea;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea txtarea;
     // End of variables declaration//GEN-END:variables
 }
