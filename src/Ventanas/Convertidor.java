@@ -1,4 +1,3 @@
-
 package Ventanas;
 
 import Negocio.NArchivo;
@@ -15,8 +14,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import java.util.List;
-
 
 public class Convertidor extends javax.swing.JFrame {
 
@@ -38,12 +35,7 @@ public class Convertidor extends javax.swing.JFrame {
     }
 
     public ArrayList AbrirArchivo() {
-        String documento = "";
-        String aux;
-        File write;
         JFileChooser jf = new JFileChooser();
-        String texto = "";
-        String convertido = "";
         try {
             jf.setFileSelectionMode(JFileChooser.FILES_ONLY);
             jf.showOpenDialog(null);
@@ -53,63 +45,46 @@ public class Convertidor extends javax.swing.JFrame {
 
             Long temp;
             String bfRead;
-            temp= System.currentTimeMillis();
+            temp = System.currentTimeMillis();
             while ((bfRead = buffer.readLine()) != null) {
-                 pta.add(Long.parseLong(bfRead));
+                pta.add(Long.parseLong(bfRead));
             }
-            Long tempf= System.currentTimeMillis();
+            Long tempf = System.currentTimeMillis();
             System.out.println("lectura completada:" + (tempf - temp));
             System.out.println(pta.size());
         } catch (IOException e) {
             System.err.println("No se encontro archivo");
         }
-
-//        ArrayList num = new ArrayList();
-
-//        for (int i = 0; i < texto.length(); i++) {
-//            texto = texto.replaceAll(",", " ");
-//            String[] parts = texto.split(" ");
-//
-//            try {
-//                num.add(Double.parseDouble(parts[i]));
-//            } catch (Exception e) {
-//
-//            }
-//        }
-
         Collections.sort(pta);
-        String convertidor="";
+        String convertidor = "";
         for (int i = 0; i < 500; i++) {
-            convertidor=convertidor + String.valueOf(pta.get(i))+" ";
+            convertidor = convertidor + String.valueOf(pta.get(i)) + " ";
         }
-        
         txtarea.setText(convertidor);
 
         return pta;
-
     }
 
     public String GuardarArchivo() {
         String mensaje = null;
-                          JFileChooser escritura = new JFileChooser();
+        JFileChooser escritura = new JFileChooser();
         try {
-                  escritura.setFileSelectionMode(JFileChooser.FILES_ONLY);
-                  escritura.showOpenDialog(null);
-                  read_w=escritura.getSelectedFile();
-                  FileWriter wt = new FileWriter(read_w);
-                  BufferedWriter bf_w= new BufferedWriter(wt);
+            escritura.setFileSelectionMode(JFileChooser.FILES_ONLY);
+            escritura.showOpenDialog(null);
+            read_w = escritura.getSelectedFile();
+            FileWriter wt = new FileWriter(read_w);
+            BufferedWriter bf_w = new BufferedWriter(wt);
             for (int i = 0; i < pta.size(); i++) {
-                  bf_w.write(String.valueOf(pta.get(i)) + "\n");
+                bf_w.write(String.valueOf(pta.get(i)) + "\n");
             }
             bf_w.close();
             mensaje = "Archivo Guardado";
-
         } catch (Exception e) {
         }
         return mensaje;
 
     }
-  
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -194,7 +169,6 @@ public class Convertidor extends javax.swing.JFrame {
         System.exit(0);
 
     }//GEN-LAST:event_jButton2ActionPerformed
-
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
