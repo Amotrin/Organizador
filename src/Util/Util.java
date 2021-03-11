@@ -1,79 +1,115 @@
 package Util;
 
+
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
+public class Util extends javax.swing.JFrame {
+    ArrayList<Long> pta = new ArrayList();
 
-public class Util {
-    public Object[][] setJTable(ArrayList<Object> lista) {
-        Object[][] objetos = new Object[lista.size()][1];
-        for (int i = 0; i < lista.size(); i++) {
-            objetos[i][0] = lista.get(i);
-        }
-        return objetos;
-    }
-  
-    public Object[] setJList(ArrayList<Object> lista) {
-        Object[]objetos = new Object[lista.size()];
-        for (int i = 0; i < lista.size(); i++) {
-            objetos[i] = lista.get(i);
-        }
-        return objetos;
-    }
-    public void serializar(String nombreArchivo, Object objeto) {
+    public ArrayList AbrirArchivo() {
 
-        ObjectOutputStream escribiendoFichero = null;
+        File read;
+
+        JFileChooser jf = new JFileChooser();
         try {
-            escribiendoFichero = new ObjectOutputStream(new FileOutputStream(nombreArchivo));
-            escribiendoFichero.writeObject(objeto);
-            escribiendoFichero.close();
-        } catch (IOException ex) {
-            Logger.getLogger(Util.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            try {
-                escribiendoFichero.close();
-            } catch (IOException ex) {
-                Logger.getLogger(Util.class.getName()).log(Level.SEVERE, null, ex);
+            
+            jf.setFileSelectionMode(JFileChooser.FILES_ONLY);
+            jf.showOpenDialog(null);
+            read = jf.getSelectedFile();
+            FileReader archiv = new FileReader(read);
+            BufferedReader buffer = new BufferedReader(archiv);
+            Long temp;
+            String bfRead;
+            temp = System.currentTimeMillis();
+            
+            while ((bfRead = buffer.readLine()) != null) {
+                pta.add(Long.parseLong(bfRead));
+                
             }
+            
+            Long tempf = System.currentTimeMillis();
+            System.out.println("lectura completada:" + (tempf - temp));
+            System.out.println(pta.size());
+        
+        } catch (IOException e) {
+          
+            JOptionPane.showMessageDialog(null, "No se encontro archivo");
+            
         }
+        return pta;
+
     }
 
-    public Object desSerializar(String nombreArchivo) {
-        Object obj;
-        ObjectInputStream leyendoFichero = null;
+    public ArrayList Ordenar() {
+        
+        int mid = pta.size() / 2;
+        
+        do {           
+            for (int i = mid; i < pta.size(); i++) {               
+                long test = (long) pta.get(i);
+                int j = i;
+                
+                do {                    
+                    pta.set(j, pta.get(j - mid));
+                    j = j - mid;
+               
+                } while (j >= mid && (long) pta.get(j - mid) > test);                
+                pta.set(j, test);
+                
+            }
+            mid = mid / 2;
+        
+        } while (mid > 0);        
+        return pta;
+        
+    }
+
+    public String GuardarArchivo() {
+        
+        File read_w;
+        String mensaje = null;
+        JFileChooser escritura = new JFileChooser();
+        System.out.println(pta.size());
+        
         try {
-            leyendoFichero = new ObjectInputStream(new FileInputStream(nombreArchivo));
-            obj = leyendoFichero.readObject();
-            leyendoFichero.close();
-            return obj;
-        } catch (IOException ex) {
-            Logger.getLogger(Util.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Util.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            try {
-                if (leyendoFichero != null) {
-                    leyendoFichero.close();
-                }
-            } catch (IOException ex) {
-                Logger.getLogger(Util.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            escritura.setFileSelectionMode(JFileChooser.FILES_ONLY);
+            escritura.showOpenDialog(null);
+            read_w = escritura.getSelectedFile();
+            FileWriter wt = new FileWriter(read_w);
+            BufferedWriter bf_w = new BufferedWriter(wt);
+            
+            for (int i = 0; i < pta.size(); i++) {
+                bf_w.write(String.valueOf(pta.get(i)) + "\n");
+                
+            }            
+            bf_w.close();
+            mensaje = "Archivo Guardado";
+            
+        } catch (IOException e) {
         }
-        return null;
+        
+        return mensaje;
+    }
+    public String Impresion() {
+        String convertidor = "";
+        for (int i = 0; i < 300; i++) {
+            convertidor = convertidor + String.valueOf(pta.get(i)) + " ";
+        }
+        return convertidor;
+    }
+    public ArrayList<Long> getPta() {
+        return pta;
     }
 
- 
-           
+    public void setPta(ArrayList<Long> pta) {
+        this.pta = pta;
+    }
 }

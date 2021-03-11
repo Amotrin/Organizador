@@ -1,88 +1,14 @@
 package Ventanas;
 
-import Negocio.NArchivo;
-import Util.Util;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import Util.Util;
 
 public class Convertidor extends javax.swing.JFrame {
-
-    JFileChooser seleccionar = new JFileChooser();
-    File archivo;
-    FileInputStream entrada;
-    FileOutputStream salida;
-    FileReader leer;
-    File read;
-    File read_w;
-    FileWriter write;
-    NArchivo objeto;
+    
     Util util = new Util();
-    ArrayList pta = new ArrayList();
-
     public Convertidor() {
         initComponents();
         this.setLocationRelativeTo(null);
-    }
-
-    public ArrayList AbrirArchivo() {
-        JFileChooser jf = new JFileChooser();
-        try {
-            jf.setFileSelectionMode(JFileChooser.FILES_ONLY);
-            jf.showOpenDialog(null);
-            read = jf.getSelectedFile();
-            FileReader archiv = new FileReader(read);
-            BufferedReader buffer = new BufferedReader(archiv);
-
-            Long temp;
-            String bfRead;
-            temp = System.currentTimeMillis();
-            while ((bfRead = buffer.readLine()) != null) {
-                pta.add(Long.parseLong(bfRead));
-            }
-            Long tempf = System.currentTimeMillis();
-            System.out.println("lectura completada:" + (tempf - temp));
-            System.out.println(pta.size());
-        } catch (IOException e) {
-            System.err.println("No se encontro archivo");
-        }
-        Collections.sort(pta);
-        String convertidor = "";
-        for (int i = 0; i < 500; i++) {
-            convertidor = convertidor + String.valueOf(pta.get(i)) + " ";
-        }
-        txtarea.setText(convertidor);
-
-        return pta;
-    }
-
-    public String GuardarArchivo() {
-        String mensaje = null;
-        JFileChooser escritura = new JFileChooser();
-        try {
-            escritura.setFileSelectionMode(JFileChooser.FILES_ONLY);
-            escritura.showOpenDialog(null);
-            read_w = escritura.getSelectedFile();
-            FileWriter wt = new FileWriter(read_w);
-            BufferedWriter bf_w = new BufferedWriter(wt);
-            for (int i = 0; i < pta.size(); i++) {
-                bf_w.write(String.valueOf(pta.get(i)) + "\n");
-            }
-            bf_w.close();
-            mensaje = "Archivo Guardado";
-        } catch (Exception e) {
-        }
-        return mensaje;
-
     }
 
     @SuppressWarnings("unchecked")
@@ -148,24 +74,32 @@ public class Convertidor extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+
     private void BotonAbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonAbrirActionPerformed
 
-        AbrirArchivo();
+        util.AbrirArchivo();
+        util.Ordenar();
+        txtarea.setText(util.Impresion());
 
     }//GEN-LAST:event_BotonAbrirActionPerformed
 
     private void BotonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonGuardarActionPerformed
-        GuardarArchivo();
+        
+        util.GuardarArchivo();
         JOptionPane.showMessageDialog(null, "Archivo guardado");
+        
     }//GEN-LAST:event_BotonGuardarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        
         Principal b = new Principal();
         b.setVisible(true);
         this.setVisible(false);
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        
         System.exit(0);
 
     }//GEN-LAST:event_jButton2ActionPerformed
