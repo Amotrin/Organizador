@@ -4,12 +4,15 @@ import Util.ShellSort;
 import Util.TextArea;
 import javax.swing.JOptionPane;
 import Util.Util;
-
+/*
+    Menu secundario.
+*/
 public class Convertidor extends javax.swing.JFrame {
-    
+
     Util util = new Util();
     ShellSort sort = new ShellSort();
     TextArea imp = new TextArea();
+
     public Convertidor() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -119,22 +122,22 @@ public class Convertidor extends javax.swing.JFrame {
     }//GEN-LAST:event_BotonAbrirActionPerformed
 
     private void BotonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonGuardarActionPerformed
-        
+
         util.GuardarArchivo();
         JOptionPane.showMessageDialog(null, "Archivo guardado");
-        
+
     }//GEN-LAST:event_BotonGuardarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
+
         Principal b = new Principal();
         b.setVisible(true);
         this.setVisible(false);
-        
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        
+
         System.exit(0);
 
     }//GEN-LAST:event_jButton2ActionPerformed

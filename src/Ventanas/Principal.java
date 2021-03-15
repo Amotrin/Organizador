@@ -1,7 +1,8 @@
 
 package Ventanas;
-
-
+/*
+    Menu Principal.
+*/
 public class Principal extends javax.swing.JFrame {
 
     public Principal() {
