@@ -38,6 +38,7 @@ public class Util extends javax.swing.JFrame {
             Long tempf = System.currentTimeMillis();
             System.out.println("lectura completada:" + (tempf - temp));
             System.out.println(pta.size());
+            
         
         } catch (IOException e) {
           
@@ -46,30 +47,6 @@ public class Util extends javax.swing.JFrame {
         }
         return pta;
 
-    }
-
-    public ArrayList Ordenar() {
-        
-        int mid = pta.size() / 2;
-        
-        do {           
-            for (int i = mid; i < pta.size(); i++) {               
-                long test = (long) pta.get(i);
-                int j = i;
-                
-                do {                    
-                    pta.set(j, pta.get(j - mid));
-                    j = j - mid;
-               
-                } while (j >= mid && (long) pta.get(j - mid) > test);                
-                pta.set(j, test);
-                
-            }
-            mid = mid / 2;
-        
-        } while (mid > 0);        
-        return pta;
-        
     }
 
     public String GuardarArchivo() {
@@ -98,13 +75,7 @@ public class Util extends javax.swing.JFrame {
         
         return mensaje;
     }
-    public String Impresion() {
-        String convertidor = "";
-        for (int i = 0; i < 300; i++) {
-            convertidor = convertidor + String.valueOf(pta.get(i)) + " ";
-        }
-        return convertidor;
-    }
+
     public ArrayList<Long> getPta() {
         return pta;
     }
